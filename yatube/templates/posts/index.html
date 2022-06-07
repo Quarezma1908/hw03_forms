@@ -1,0 +1,28 @@
+{% block title %}
+  Последние обновления на сайте
+{% endblock %} 
+{% block content %}
+  {% if text == 'Главная страница' %}
+    {% for post in posts %}
+    <ul>
+      <li>
+        Автор: {{ post.author.get_full_name }}
+      </li>
+      <li>
+        Дата публикации: {{ post.pub_date|date:"d E Y" }}
+      </li>
+    </ul>
+    <p>{{ post.text|linebreaks }}</p>    
+    {% if post.group %}
+    <a href="{% url 'posts:group_list' post.group.slug %}">
+      все записи группы!
+    </a> 
+    {% endif %}
+    {% if not forloop.last %}<hr>{% endif %}
+{% endfor %} 
+  {% elif text == 'Вложенная страница' %}
+      Вы в одном клике от главной страницы!
+  {% else %}
+      Мы понятия не имеем, где вы!
+  {% endif %} 
+{% endblock %} 
